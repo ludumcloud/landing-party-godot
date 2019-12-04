@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="landing-party"
+run/main_scene="res://scenes/Root.tscn"
 config/icon="res://icon.png"
 
 [rendering]
