@@ -6,7 +6,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var tileMap = self.get_node("./TileMap")
+	var tileMap = self.get_node("./FloorMap")
 	print(tileMap.get_used_cells())
 	print(tileMap.map_to_world(Vector2(3, -1)))
 	
@@ -17,5 +17,5 @@ func _ready():
 #	pass
 
 func _draw():
-	var tileMap = self.get_node("./TileMap")
+	var tileMap = self.get_node("./FloorMap")
 	draw_circle(tileMap.map_to_world(Vector2(3, 1)), 10, Color.red)
