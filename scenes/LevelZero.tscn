@@ -19,3 +19,4 @@ tile_data = PoolIntArray( -262137, 0, 0, -262136, 0, 0, -262131, 0, 0, -262130, 
 [node name="Camera2D" type="Camera2D" parent="FloorMap"]
 anchor_mode = 0
 current = true
+zoom = Vector2( 2, 2 )
