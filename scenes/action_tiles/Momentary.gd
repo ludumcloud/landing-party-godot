@@ -3,7 +3,8 @@ extends Node2D
 export(Dictionary) var args = {
 	"offTileId": 0,
 	"onTileId": 0,
-	"targetNodeName": ""
+	"targetNodeNames": [""],
+	"inverseTargetNodeNames": [""]
 }
 
 var map_pos
@@ -24,3 +25,17 @@ func _ready():
 func _on_Node2D_redshirtEntered(tile_coords):
 	if (tile_coords == map_pos):
 		set_cell(args.onTileId)
+		for target in args.targetNodeNames:
+			get_parent().get_node(target).set_on()
+		for target in args.inverseTargetNodeNames:
+			get_parent().get_node(target).set_off()
+
+
+func _on_Node2D_redshirtExited(tile_coords):
+	if (tile_coords == map_pos):
+		set_cell(args.offTileId)
+		for target in args.targetNodeNames:
+			get_parent().get_node(target).set_off()
+		for target in args.inverseTargetNodeNames:
+			get_parent().get_node(target).set_on()
+
