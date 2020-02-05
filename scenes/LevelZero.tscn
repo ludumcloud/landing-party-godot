@@ -4,7 +4,7 @@
 [ext_resource path="res://scenes/action_tiles/Momentary.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/LevelZero.gd" type="Script" id=3]
 [ext_resource path="res://scenes/action_tiles/Block.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/redshirt.png" type="Texture" id=5]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -108,9 +108,7 @@ args = {
 
 [node name="Line2D" type="Line2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 286.26, 413.87 )
-scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 5 )
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 288.5, 414.5 )
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtExited" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtExited"]
