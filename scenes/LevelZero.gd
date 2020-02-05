@@ -29,9 +29,12 @@ func get_travel_path(entity, destination_position):
 
 func step_character(entity, destination_position, delta):
 	var points = get_travel_path(entity, destination_position)
+	print(points)
 	if points.size() > 2:
-		var new_position = points[1]
-		entity.position = new_position
+		# var vector = points[1] - points[0]
+		# var new_position = points[0] * (vector * 0.001)
+		entity.position = world_to_tile_coordinate(points[2])
+		# print(new_position)
 		return false
 	else:
 		entity.position = points[0]
@@ -64,5 +67,6 @@ func _unhandled_input(event):
 
 	if event is InputEventKey and event.scancode == KEY_ENTER:
 		if path.points.size() != 0:
-			character.position = path.points[-1]
+			destination_point = path.points[-1]
 			path.points = PoolVector2Array()
+			game_state = GAME_STATE_RESOLVE
