@@ -40,5 +40,5 @@ animations = [ {
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 2
+frame = 8
 playing = true
