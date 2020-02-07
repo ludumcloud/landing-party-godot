@@ -69,6 +69,6 @@ func _unhandled_input(event):
 	if event is InputEventKey and event.scancode == KEY_ENTER:
 		if path.points.size() != 0:
 			#destination_point = path.points[-1]
-			self.get_node("Player").move_to_pos(path.points[-1])
+			self.get_node("Player").move_to_pos(map.world_to_map(path.points[-1]))
 			path.points = PoolVector2Array()
 			game_state = GAME_STATE_RESOLVE

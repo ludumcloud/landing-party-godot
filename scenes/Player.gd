@@ -14,6 +14,8 @@ func center_world_coords(position):
 	
 func step_character(entity, destination_position, delta):
 	var points = get_parent().get_travel_path(entity, destination_position)
+	print(entity)
+	print(destination_position)
 	print(points)
 	if points.size() > 2:
 		# var vector = points[1] - points[0]
@@ -29,6 +31,8 @@ func move_to_pos(dest_tile_coords):
 	next_pos = dest_tile_coords
 
 func tile_coords_to_world(tile):
+	print("Tile")
+	print(tile)
 	return get_parent().map.map_to_world(tile)
 
 # Called when the node enters the scene tree for the first time.
