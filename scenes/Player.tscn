@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/TempleRun/Idle__000.png" type="Texture" id=1]
 [ext_resource path="res://assets/TempleRun/Idle__005.png" type="Texture" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://assets/TempleRun/Idle__008.png" type="Texture" id=18]
 [ext_resource path="res://assets/TempleRun/Idle__009.png" type="Texture" id=19]
 [ext_resource path="res://assets/TempleRun/Run__000.png" type="Texture" id=20]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=21]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -35,10 +36,11 @@ animations = [ {
 } ]
 
 [node name="Player" type="Node2D"]
+script = ExtResource( 21 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
 animation = "idle"
-frame = 8
+frame = 9
 playing = true

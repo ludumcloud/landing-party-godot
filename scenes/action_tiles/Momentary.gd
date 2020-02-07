@@ -23,6 +23,8 @@ func _ready():
 
 
 func _on_Node2D_redshirtEntered(tile_coords):
+	print("over here")
+	print(tile_coords)
 	if (tile_coords == map_pos):
 		set_cell(args.onTileId)
 		for target in args.targetNodeNames:

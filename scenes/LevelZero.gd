@@ -23,8 +23,8 @@ func world_to_tile_coordinate(position):
 	var centered = converted + map.cell_size * 0.5
 	return centered
 
-func get_travel_path(entity, destination_position):
-	var tile_coordinate = world_to_tile_coordinate(destination_position)
+func get_travel_path(entity, destination_world_pos):
+	var tile_coordinate = world_to_tile_coordinate(destination_world_pos)
 	return nav.get_simple_path(entity.global_position, tile_coordinate, false) 
 
 func step_character(entity, destination_position, delta):
@@ -52,9 +52,10 @@ func _process(delta):
 		game_state = GAME_STATE_COMMAND
 	# We are resolving commands issued to the map entities
 	# right now it's just character with the coordinate list
-	var complete = step_character(character, destination_point, delta)
-	if complete:
-		game_state = GAME_STATE_COMMAND
+	#var complete = step_character(character, destination_point, delta)
+	#if complete:
+	#	emit_signal("redshirtEntered", map.world_to_map(destination_point))
+	#	game_state = GAME_STATE_COMMAND
 
 func _unhandled_input(event):
 	if game_state != GAME_STATE_COMMAND:
@@ -67,6 +68,7 @@ func _unhandled_input(event):
 
 	if event is InputEventKey and event.scancode == KEY_ENTER:
 		if path.points.size() != 0:
-			destination_point = path.points[-1]
+			#destination_point = path.points[-1]
+			self.get_node("Player").move_to_pos(map.world_to_map(path.points[-1]))
 			path.points = PoolVector2Array()
 			game_state = GAME_STATE_RESOLVE
