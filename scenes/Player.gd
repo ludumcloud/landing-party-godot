@@ -1,6 +1,5 @@
 extends Node2D
 
-
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -14,15 +13,18 @@ func center_world_coords(position):
 	
 func step_character(entity, destination_position, delta):
 	var points = get_parent().get_travel_path(entity, destination_position)
-	print(points)
-	if points.size() > 2:
-		# var vector = points[1] - points[0]
-		# var new_position = points[0] * (vector * 0.001)
-		entity.position = center_world_coords(points[2])
-		# print(new_position)
+	if points.size() > 1:
+		var vector = points[1] - points[0]
+		var normalized = vector.normalized()
+		var magnitude = (normalized * 5)
+		var new_position = points[0] + (normalized * (ENTITY_SPEED * delta))
+		entity.position = new_position
 		return false
-	else:
+	elif points.size() == 1:
 		entity.position = points[0]
+		return true
+	else:
+		# Do nothing
 		return true
 
 func move_to_pos(dest_tile_coords):
@@ -35,9 +37,6 @@ func tile_coords_to_world(tile):
 var continue_nav
 func _ready():
 	pass
-	
-
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,4 +45,3 @@ func _process(delta):
 	else:
 		continue_nav = false
 		next_pos = null
-
