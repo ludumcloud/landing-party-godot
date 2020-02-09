@@ -17,45 +17,29 @@ var game_state = GAME_STATE_COMMAND
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+	
+func redshirt_entered(position: Vector2):
+	emit_signal("redshirtEntered", position)
+	
+func redshirt_exited(position: Vector2):
+	emit_signal("redshirtExited", position)
 
-func world_to_tile_coordinate(position):
+func center_world_coords(position):
 	var converted = map.map_to_world(map.world_to_map(position)) 
 	var centered = converted + map.cell_size * 0.5
 	return centered
 
 func get_travel_path(entity, destination_world_pos):
-	var tile_coordinate = world_to_tile_coordinate(destination_world_pos)
+	var tile_coordinate = center_world_coords(destination_world_pos)
 	return nav.get_simple_path(entity.global_position, tile_coordinate, false) 
 
-func step_character(entity, destination_position, delta):
-	var points = get_travel_path(entity, destination_position)
-	print(points)
-	if points.size() > 2:
-		# var vector = points[1] - points[0]
-		# var new_position = points[0] * (vector * 0.001)
-		entity.position = world_to_tile_coordinate(points[2])
-		# print(new_position)
-		return false
-	else:
-		entity.position = points[0]
-		return true
 
-var elapsed = 0
-var once1 = true
-var once2 = true
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if game_state == GAME_STATE_COMMAND:
 		return
 		
 	if destination_point == null:
 		game_state = GAME_STATE_COMMAND
-	# We are resolving commands issued to the map entities
-	# right now it's just character with the coordinate list
-	#var complete = step_character(character, destination_point, delta)
-	#if complete:
-	#	emit_signal("redshirtEntered", map.world_to_map(destination_point))
-	#	game_state = GAME_STATE_COMMAND
 
 func _unhandled_input(event):
 	if game_state != GAME_STATE_COMMAND:
