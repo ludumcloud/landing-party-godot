@@ -31,7 +31,12 @@ func center_world_coords(position):
 
 func get_travel_path(entity, destination_world_pos):
 	var tile_coordinate = center_world_coords(destination_world_pos)
-	return nav.get_simple_path(entity.global_position, tile_coordinate, false) 
+	var path = nav.get_simple_path(entity.global_position, tile_coordinate, false)
+	if (path.size() > 0):
+		# Replace the begining and end points of the path because reasons
+		path.set(path.size()-1 ,tile_coordinate)
+		path.set(0, entity.global_position)
+	return path
 
 
 func _process(delta):
