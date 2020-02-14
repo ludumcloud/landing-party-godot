@@ -8,7 +8,6 @@ onready var parent = get_parent();
 	
 func step_character(entity, destination_position, delta):
 	var points = parent.get_travel_path(entity, destination_position)
-	print(points)
 	var distance = ENTITY_SPEED * delta
 	if points.size() > 1:
 		var vector = points[1] - points[0]
