@@ -30,9 +30,9 @@ func _physics_process(delta):
 	else:
 		current_state.physics_process(delta)
 
-func _change_state(new_state):
+func change_state(new_state):
 	run_actions = true
-	current_state.exit()
+	current_state.stop()
 	
 	current_state = new_state
 	current_state.start()
