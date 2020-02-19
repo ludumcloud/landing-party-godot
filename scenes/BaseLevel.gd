@@ -6,8 +6,11 @@ signal redshirtExited
 
 onready var nav: Navigation2D = $Navigation2D
 onready var path: Line2D = $Line2D
-onready var character = $Player
+onready var player = $Player
+onready var redshirt = $Redshirt01 # make this enumerated eventually
 onready var map: TileMap = $Navigation2D/Floor
+var entity_order: Array
+var current_entity_idx: int
 
 var command_list = []
 var destination_point = null # Single command mechanic for now use command list for real
@@ -17,7 +20,8 @@ var game_state = GAME_STATE_COMMAND
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	entity_order = [player, redshirt]
+	current_entity_idx = 0
 	
 func redshirt_entered(position: Vector2):
 	emit_signal("redshirtEntered", position)
@@ -39,7 +43,6 @@ func get_travel_path(entity, destination_world_pos):
 		path.set(0, entity.global_position)
 	return path
 
-
 func _process(delta):
 	if game_state == GAME_STATE_COMMAND:
 		return
@@ -51,6 +54,8 @@ func _unhandled_input(event):
 	if game_state != GAME_STATE_COMMAND:
 		return
 
+	var character = entity_order[current_entity_idx]
+
 	if (event is InputEventMouseButton 
 			and event.button_index == BUTTON_LEFT
 			and event.is_pressed()):
@@ -59,6 +64,7 @@ func _unhandled_input(event):
 	if event is InputEventKey and event.scancode == KEY_ENTER:
 		if path.points.size() != 0:
 			#destination_point = path.points[-1]
-			self.get_node("Player").move_to_pos(map.world_to_map(path.points[-1]))
+			character.move_to_pos(map.world_to_map(path.points[-1]))
 			path.points = PoolVector2Array()
 			game_state = GAME_STATE_RESOLVE
+			current_entity_idx = (current_entity_idx + 1) % entity_order.size()
