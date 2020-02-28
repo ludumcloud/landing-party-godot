@@ -1,13 +1,17 @@
 extends Node2D
 
+# For Single trigger actions (one way switches)
+
 export(Dictionary) var args = {
 	"offTileId": 0,
 	"onTileId": 0,
 	"targetNodeNames": [""],
-	"inverseTargetNodeNames": [""]
+	"inverseTargetNodeNames": [""],
+	"consumesRedshirt": false
 }
 
 var map_pos
+var triggered = false
 
 func set_cell(tileId):
 	get_parent().set_cell(map_pos.x, map_pos.y, tileId)
@@ -22,22 +26,15 @@ func _ready():
 #	pass
 
 
-func _on_Node2D_redshirtEntered(tile_coords,  triggerer: Character):
+func _on_Node2D_redshirtEntered(tile_coords, triggerer: Character):
 	print("over here")
 	print(tile_coords)
-	if (tile_coords == map_pos):
+	if (tile_coords == map_pos and not triggered):
 		set_cell(args.onTileId)
 		for target in args.targetNodeNames:
 			get_parent().get_node(target).set_on()
 		for target in args.inverseTargetNodeNames:
 			get_parent().get_node(target).set_off()
-
-
-func _on_Node2D_redshirtExited(tile_coords,  triggerer: Character):
-	if (tile_coords == map_pos):
-		set_cell(args.offTileId)
-		for target in args.targetNodeNames:
-			get_parent().get_node(target).set_off()
-		for target in args.inverseTargetNodeNames:
-			get_parent().get_node(target).set_on()
-
+		if (args.consumesRedshirt):
+			triggerer.start_death()
+		self.triggered = true
