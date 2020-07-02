@@ -23,11 +23,11 @@ func _ready():
 	entity_order = [player, redshirt]
 	current_entity_idx = 0
 	
-func redshirt_entered(position: Vector2):
-	emit_signal("redshirtEntered", position)
+func redshirt_entered(position: Vector2, triggerer: Character):
+	emit_signal("redshirtEntered", position, triggerer)
 	
-func redshirt_exited(position: Vector2):
-	emit_signal("redshirtExited", position)
+func redshirt_exited(position: Vector2, triggerer: Character):
+	emit_signal("redshirtExited", position, triggerer)
 
 func center_world_coords(position):
 	var converted = map.map_to_world(map.world_to_map(position)) 

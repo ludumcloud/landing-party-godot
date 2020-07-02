@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/2dtop-full-set.png" type="Texture" id=1]
 [ext_resource path="res://scenes/action_tiles/Momentary.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scenes/action_tiles/Block.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/Redshirt.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/action_tiles/Latch.tscn" type="PackedScene" id=7]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -19,11 +20,11 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 vertices = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="NavigationPolygon" id=5]
+[sub_resource type="NavigationPolygon" id=4]
 vertices = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
-[sub_resource type="TileSet" id=4]
+[sub_resource type="TileSet" id=5]
 0/name = "2dtop-full-set.png 0"
 0/texture = ExtResource( 1 )
 0/tex_offset = Vector2( 0, 0 )
@@ -95,7 +96,7 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 6/tile_mode = 0
 6/occluder_offset = Vector2( 0, 0 )
 6/navigation_offset = Vector2( 0, 0 )
-6/navigation = SubResource( 5 )
+6/navigation = SubResource( 4 )
 6/shapes = [  ]
 6/z_index = 0
 
@@ -105,9 +106,9 @@ script = ExtResource( 3 )
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="Floor" type="TileMap" parent="Navigation2D"]
-tile_set = SubResource( 4 )
+tile_set = SubResource( 5 )
 format = 1
-tile_data = PoolIntArray( 3, 1, 0, 4, 1, 0, 5, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65544, 1, 0, 65545, 1, 0, 65546, 1, 0, 131075, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 131079, 1, 0, 131080, 1, 0, 131081, 1, 0, 131082, 1, 0, 196612, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 262148, 1, 0, 262153, 1, 0, 327684, 1, 0, 327689, 1, 0, 393216, 1, 0, 393217, 1, 0, 393218, 3, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0, 458756, 1, 0, 458761, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524297, 1, 0, 524298, 3, 0, 524299, 1, 0 )
+tile_data = PoolIntArray( 3, 1, 0, 4, 1, 0, 5, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65544, 1, 0, 65545, 1, 0, 65546, 1, 0, 131075, 1, 0, 131076, 1, 0, 131077, 1, 0, 131078, 1, 0, 131079, 1, 0, 131080, 1, 0, 131081, 1, 0, 131082, 1, 0, 196612, 1, 0, 196616, 1, 0, 196617, 1, 0, 196618, 1, 0, 262148, 1, 0, 262153, 1, 0, 327684, 1, 0, 327689, 1, 0, 393216, 1, 0, 393217, 1, 0, 393218, 3, 0, 393219, 1, 0, 393220, 1, 0, 393221, 1, 0, 393222, 3, 0, 393223, 3, 0, 393224, 1, 0, 393225, 1, 0, 393226, 1, 0, 393227, 1, 0, 458756, 1, 0, 458761, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524297, 1, 0, 524298, 3, 0, 524299, 1, 0 )
 
 [node name="Camera2D" type="Camera2D" parent="Navigation2D/Floor"]
 position = Vector2( 513.531, 299.983 )
@@ -137,6 +138,43 @@ args = {
 "onTileId": 0
 }
 
+[node name="BridgeConsoleRight" parent="Navigation2D/Floor" instance=ExtResource( 7 )]
+position = Vector2( 733.968, 415.748 )
+scale = Vector2( 25.335, 9.23856 )
+args = {
+"consumesRedshirt": false,
+"inverseTargetNodeNames": [  ],
+"offTileId": 5,
+"onTileId": 4,
+"targetNodeNames": [ "BridgeRight" ]
+}
+
+[node name="BridgeRight" parent="Navigation2D/Floor" instance=ExtResource( 4 )]
+position = Vector2( 482.067, 416.863 )
+args = {
+"initiallyOn": false,
+"offTileId": 3,
+"onTileId": 1
+}
+
+[node name="BridgeConsoleLeft" parent="Navigation2D/Floor" instance=ExtResource( 7 )]
+position = Vector2( 354.445, 542.813 )
+args = {
+"consumesRedshirt": true,
+"inverseTargetNodeNames": [  ],
+"offTileId": 5,
+"onTileId": 4,
+"targetNodeNames": [ "BridgeLeft" ]
+}
+
+[node name="BridgeLeft" parent="Navigation2D/Floor" instance=ExtResource( 4 )]
+position = Vector2( 417.977, 413.519 )
+args = {
+"initiallyOn": false,
+"offTileId": 3,
+"onTileId": 1
+}
+
 [node name="Line2D" type="Line2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
@@ -145,4 +183,6 @@ position = Vector2( 288.5, 414.5 )
 [node name="Redshirt01" parent="." instance=ExtResource( 6 )]
 position = Vector2( 224, 159.5 )
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtEntered"]
+[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleRight" method="_on_Node2D_redshirtEntered"]
+[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleLeft" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtExited" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtExited"]

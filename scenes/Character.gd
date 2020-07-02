@@ -28,13 +28,18 @@ func step_character(entity, destination_position, delta):
 
 func move_to_pos(dest_tile_coords):
 	next_pos = dest_tile_coords
-	parent.redshirt_exited(world_coords_to_tile(self.position))
+	parent.redshirt_exited(world_coords_to_tile(self.position), self)
 
 func tile_coords_to_world(tile):
 	return parent.map.map_to_world(tile)
 	
 func world_coords_to_tile(world_coords):
 	return parent.map.world_to_map(world_coords)
+
+func start_death():
+	#TODO we need to trigger death
+	print("Something died....")
+	return false
 
 func _ready():
 	pass
@@ -45,5 +50,5 @@ func _process(delta):
 		var complete = step_character(self, tile_coords_to_world(next_pos), delta)
 		if complete:
 			sprite.play("idle")
-			parent.redshirt_entered(next_pos)
+			parent.redshirt_entered(next_pos, self)
 			next_pos = null
