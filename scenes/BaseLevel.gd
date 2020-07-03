@@ -9,8 +9,8 @@ onready var path: Line2D = $Line2D
 onready var player = $Player
 onready var redshirt = $Redshirt01 # make this enumerated eventually
 onready var map: TileMap = $Navigation2D/Floor
-var entity_order: Array
-var current_entity_idx: int
+var characters: Array
+var selectedChar: Character
 
 var command_list = []
 var destination_point = null # Single command mechanic for now use command list for real
@@ -20,9 +20,9 @@ var game_state = GAME_STATE_COMMAND
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	entity_order = [player, redshirt]
-	current_entity_idx = 0
-	
+	characters = [player, redshirt]
+	selectedChar = null
+
 func redshirt_entered(position: Vector2, triggerer: Character):
 	emit_signal("redshirtEntered", position, triggerer)
 	
@@ -43,6 +43,27 @@ func get_travel_path(entity, destination_world_pos):
 		path.set(0, entity.global_position)
 	return path
 
+func reset_char_moved_state():
+	for character in characters:
+		character.hasMoved = false
+
+func get_character_at_point(point: Vector2):
+	var centeredInput = center_world_coords(point)
+	for character in characters:
+		if centeredInput.is_equal_approx(center_world_coords(character.global_position)):
+			return character
+
+	return null
+
+func select_character(character: Character):
+	# Undo previous selection tints
+	if selectedChar != null:
+		selectedChar.set_modulate(Color(1,1,1,1))
+	selectedChar = character
+	# Tint the newly selected char
+	if selectedChar != null:
+		selectedChar.set_modulate(Color(0.5,1, 0.5,1))
+
 func _process(delta):
 	if game_state == GAME_STATE_COMMAND:
 		return
@@ -54,17 +75,22 @@ func _unhandled_input(event):
 	if game_state != GAME_STATE_COMMAND:
 		return
 
-	var character = entity_order[current_entity_idx]
-
 	if (event is InputEventMouseButton 
 			and event.button_index == BUTTON_LEFT
 			and event.is_pressed()):
-		path.points = get_travel_path(character, event.global_position)
+
+		# first see if we clicked on a character
+		var selection = get_character_at_point(event.global_position)
+		if (selection != null):
+			select_character(selection)
+			path.points = PoolVector2Array()
+		elif selectedChar != null:
+			path.points = get_travel_path(selectedChar, event.global_position)
 
 	if event is InputEventKey and event.scancode == KEY_ENTER:
 		if path.points.size() != 0:
 			#destination_point = path.points[-1]
-			character.move_to_pos(map.world_to_map(path.points[-1]))
+			selectedChar.move_to_pos(map.world_to_map(path.points[-1]))
 			path.points = PoolVector2Array()
+			select_character(null)
 			game_state = GAME_STATE_RESOLVE
-			current_entity_idx = (current_entity_idx + 1) % entity_order.size()
