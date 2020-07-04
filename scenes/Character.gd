@@ -5,6 +5,7 @@ var next_pos = null
 var ENTITY_SPEED = 400 
 onready var sprite: AnimatedSprite = get_node('AnimatedSprite')
 onready var parent = get_parent();
+onready var hasMoved = false;
 	
 func step_character(entity, destination_position, delta):
 	var points = parent.get_travel_path(entity, destination_position)
