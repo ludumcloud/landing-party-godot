@@ -7,7 +7,8 @@ export(Dictionary) var args = {
 	"initiallyOn": true
 }
 
-var map_pos
+var floor_map: TileMap
+var map_pos: Vector2
 
 func set_cell(tileId):
 	get_parent().set_cell(map_pos.x, map_pos.y, tileId)
@@ -20,7 +21,9 @@ func set_off():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	map_pos = get_parent().world_to_map(self.get_position())
+	floor_map = get_parent()
+	floor_map.action_tiles.append(self)
+	map_pos = floor_map.world_to_map(self.get_position())
 	if args.initiallyOn:
 		set_cell(args.onTileId)
 	else:

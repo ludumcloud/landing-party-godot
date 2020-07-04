@@ -1,6 +1,8 @@
 extends Node2D
 class_name BaseLevel
 
+const LevelData = preload("res://scenes/LevelData.gd")
+
 signal redshirtEntered
 signal redshirtExited
 
@@ -9,6 +11,7 @@ onready var path: Line2D = $Line2D
 onready var player = $Player
 onready var redshirt = $Redshirt01 # make this enumerated eventually
 onready var map: TileMap = $Navigation2D/Floor
+onready var level_data: LevelData
 var entity_order: Array
 var current_entity_idx: int
 
@@ -18,8 +21,10 @@ var GAME_STATE_COMMAND = 1
 var GAME_STATE_RESOLVE = 2
 var game_state = GAME_STATE_COMMAND
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# level_data = LevelData.new(player, map, [redshirt])
 	entity_order = [player, redshirt]
 	current_entity_idx = 0
 	
@@ -36,14 +41,14 @@ func center_world_coords(position):
 
 func get_travel_path(entity, destination_world_pos):
 	var tile_coordinate = center_world_coords(destination_world_pos)
-	var path = nav.get_simple_path(entity.global_position, tile_coordinate, false)
-	if (path.size() > 0):
+	var travel_path = nav.get_simple_path(entity.global_position, tile_coordinate, false)
+	if (travel_path.size() > 0):
 		# Replace the begining and end points of the path because reasons
-		path.set(path.size()-1 ,tile_coordinate)
-		path.set(0, entity.global_position)
-	return path
+		travel_path.set(travel_path.size()-1 ,tile_coordinate)
+		travel_path.set(0, entity.global_position)
+	return travel_path
 
-func _process(delta):
+func _process(_delta):
 	if game_state == GAME_STATE_COMMAND:
 		return
 		

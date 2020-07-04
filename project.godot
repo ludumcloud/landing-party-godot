@@ -18,10 +18,22 @@ _global_script_classes=[ {
 "class": "Character",
 "language": "GDScript",
 "path": "res://scenes/Character.gd"
+}, {
+"base": "Reference",
+"class": "LevelData",
+"language": "GDScript",
+"path": "res://scenes/LevelData.gd"
+}, {
+"base": "Character",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scenes/Player.gd"
 } ]
 _global_script_class_icons={
 "BaseLevel": "",
-"Character": ""
+"Character": "",
+"LevelData": "",
+"Player": ""
 }
 
 [application]
