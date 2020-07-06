@@ -94,10 +94,11 @@ position = Vector2( 224, 159.5 )
 
 [node name="TileMap_Art" type="TileMap" parent="."]
 tile_set = ExtResource( 8 )
+cell_y_sort = true
 centered_textures = true
 format = 1
 tile_data = PoolIntArray( 65539, 0, 7, 65540, 0, 8, 65544, 0, 7, 65545, 0, 196612, 65546, 0, 8, 131075, 0, 65543, 131076, 0, 327681, 131077, 0, 2, 131078, 0, 2, 131079, 0, 2, 131080, 0, 196611, 131081, 0, 131078, 131082, 0, 131077, 196612, 0, 65538, 196616, 0, 65543, 196617, 0, 131074, 196618, 0, 65544, 262148, 0, 65538, 262153, 0, 65538, 327684, 0, 65538, 327689, 0, 65538, 393216, 0, 65542, 393217, 0, 2, 393218, 0, 2, 393219, 0, 2, 393220, 0, 65540, 393221, 1, 0, 393224, 536870913, 0, 393225, 0, 65539, 393226, 0, 2, 393227, 0, 5, 458756, 0, 65538, 458761, 0, 65538, 524292, 0, 65538, 524297, 0, 65536, 524298, 0, 2, 524299, 0, 2, 524300, 0, 2, 524301, 0, 5, 589827, 0, 65542, 589828, 0, 4, 589829, 0, 2, 589830, 0, 5 )
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleLeft" method="_on_Node2D_redshirtEntered"]
-[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleRight" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtEntered"]
+[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleRight" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtExited" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtExited"]
