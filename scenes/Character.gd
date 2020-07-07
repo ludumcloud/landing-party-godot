@@ -37,6 +37,14 @@ func tile_coords_to_world(tile):
 func world_coords_to_tile(world_coords):
 	return parent.map.world_to_map(world_coords)
 
+func clear_hasmoved():
+	hasMoved = false
+	set_modulate(Color(1,1,1,1))
+
+func set_hasmoved():
+	hasMoved = true
+	set_modulate(Color(0.3, 0.3, 0.3, 1))
+
 func start_death():
 	#TODO we need to trigger death
 	print("Something died....")
@@ -52,4 +60,5 @@ func _process(delta):
 		if complete:
 			sprite.play("idle")
 			parent.redshirt_entered(next_pos, self)
+			set_hasmoved()
 			next_pos = null

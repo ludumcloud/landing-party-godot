@@ -45,7 +45,7 @@ func get_travel_path(entity, destination_world_pos):
 
 func reset_char_moved_state():
 	for character in characters:
-		character.hasMoved = false
+		character.clear_hasmoved()
 
 func get_character_at_point(point: Vector2):
 	var centeredInput = center_world_coords(point)
@@ -59,6 +59,15 @@ func select_character(character: Character):
 	# Undo previous selection tints
 	if selectedChar != null:
 		selectedChar.set_modulate(Color(1,1,1,1))
+
+	if character == null:
+		selectedChar = null
+		return
+
+	# only let yet to move chars to be selectable
+	if character.hasMoved:
+		return
+
 	selectedChar = character
 	# Tint the newly selected char
 	if selectedChar != null:
@@ -94,3 +103,6 @@ func _unhandled_input(event):
 			path.points = PoolVector2Array()
 			select_character(null)
 			game_state = GAME_STATE_RESOLVE
+
+	if event is InputEventKey and event.scancode == KEY_SPACE:
+		reset_char_moved_state()
