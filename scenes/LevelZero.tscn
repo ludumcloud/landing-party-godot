@@ -105,7 +105,7 @@ tile_set = ExtResource( 8 )
 centered_textures = true
 format = 1
 tile_data = PoolIntArray( 65540, 5, 0, 131077, 8, 0, 131079, 9, 0, 262153, 11, 0, 393227, 5, 0, 589830, 5, 0 )
-[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleLeft" method="_on_Node2D_redshirtEntered"]
+[connection signal="redshirtEntered" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtEntered" from="." to="Navigation2D/Floor/BridgeConsoleRight" method="_on_Node2D_redshirtEntered"]
 [connection signal="redshirtExited" from="." to="Navigation2D/Floor/PressurePlate1" method="_on_Node2D_redshirtExited"]
