@@ -8,7 +8,7 @@ onready var nav: Navigation2D = $Navigation2D
 onready var path: Line2D = $Line2D
 onready var player = $Player
 onready var redshirt = $Redshirt01 # make this enumerated eventually
-onready var map: TileMap = $Navigation2D/Floor
+onready var map: TileMap = $Navigation2D/Floormap
 var characters: Array
 var selectedChar: Character
 
